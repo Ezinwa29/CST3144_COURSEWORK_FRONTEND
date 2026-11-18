@@ -7,8 +7,11 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
-    <div id="mydiv">
-        <h1>{{ message }}</h1>
+    <div id="myApp">
+        <div>{{subject}}</div>
+        <div>{{location}}</div>
+        <div>{{price}}</div>
+        <img v-bind:src="image.url" v-bind:alt="image.alt" />
     </div>
     <script>
         const { createApp } = Vue;
@@ -16,10 +19,18 @@
         createApp({
             data() {
                 return {
-                    message: 'Hello, Vue!'
+                    
+                            subject: 'Computer Science', 
+                            location: 'Hendon', 
+                            price: 'Rs2000', 
+                            image:{
+                                url:"../CST3144_COURSEWORK_FRONTEND/images/computer_science_img.jpg",
+                                alt:"Computer Science lesson image"
+                            }
+                    
                 }
             },
-        }).mount('#mydiv');
+        }).mount('#myApp');
     </script>
 </body>
 </html>
