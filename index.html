@@ -16,6 +16,7 @@
             <p><b>Location:</b> {{ lesson.location }}</p>
             <p><b>Price:</b> {{ lesson.price }}</p>
             <p><b>Availability:</b> {{lesson.availability}}</p>
+            <button v-on:click="addToCart(lesson)" v-bind:disabled="!canAddToCart(lesson)">Add to Cart</button>
         </div>
     </div>
     <script>
@@ -25,6 +26,7 @@
             data() {
                 return {
                     siteName: "After School Classes",
+                    cart: [],
                     lessons: [
                         {image: {
                             url:"../CST3144_COURSEWORK_FRONTEND/images/computer_science_img.jpg", alt:"Computer Science Lesson Image"
@@ -33,10 +35,8 @@
                         subject:'Computer Science', 
                         location:'Hendon', 
                         price: '2000',
-                        availability: '5',
-                        image: {
-                            url:"../CST3144_COURSEWORK_FRONTEND/images/computer_science_img.jpg", alt:"Computer Science Lesson Image"
-                        }
+                        availability: 5
+                        
                      },
                       { image: {
                             url:"../CST3144_COURSEWORK_FRONTEND/images/maths_image.jpg", alt:"Mathematics Lesson Image"
@@ -45,7 +45,7 @@
                         subject:'Mathematics', 
                         location:'Dubai', 
                         price: '2500', 
-                        availability: '5',
+                        availability: 5
                         
                      },
                       { image: {
@@ -55,7 +55,7 @@
                         subject:'English', 
                         location:'Mauritius', 
                         price: '3000', 
-                        availability: '5'
+                        availability: 5
                         
                      },
                       { image: {
@@ -65,7 +65,7 @@
                         subject:'Science', 
                         location:'Hendon', 
                         price: '2800', 
-                        availability: '5',
+                        availability: 5
                         
                      },
                       { image: {
@@ -75,7 +75,7 @@
                         subject:'Music', 
                         location:'Dubai', 
                         price: '1500',
-                        availability: '5'
+                        availability: 5
                         
                      },
                       {  image: {
@@ -85,7 +85,7 @@
                         subject:'History', 
                         location:'Mauritius', 
                         price: '1800', 
-                        availability: '5'
+                        availability: 5
                     
                      },
                       { image: {
@@ -95,7 +95,7 @@
                         subject:'Geography', 
                         location:'Hendon', 
                         price: '1600',
-                        availability: '5'
+                        availability: 5
                         
                      },
                       { image: {
@@ -105,7 +105,7 @@
                         subject:'Photography', 
                         location:'Mauritius', 
                         price: '2200',
-                        availability: '5'
+                        availability: 5
                         
                      },
                       {  image: {
@@ -115,7 +115,7 @@
                         subject:'Football', 
                         location:'Dubai', 
                         price: '2500', 
-                        availability: '5',
+                        availability: 5
                        
                      },
                       { image: {
@@ -125,13 +125,30 @@
                         subject:'Basketball', 
                         location:'Hendon', 
                         price: '2700', 
-                        availability: '5',
+                        availability: 5
                         
                      }
                     ]
                     
                 }
             },
+
+            computed: {
+
+            },
+
+            methods: {
+                addToCart(lesson) {
+                    this.cart.push(lesson.id)
+                    lesson.availability--
+                },
+
+                canAddToCart(lesson) {
+                    return lesson.availability > 0
+                },
+
+
+            }
         }).mount('#myApp');
     </script>
 </body>
