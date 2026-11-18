@@ -7,11 +7,16 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
-    <div id="myApp">
-        <div>{{subject}}</div>
-        <div>{{location}}</div>
-        <div>{{price}}</div>
-        <img v-bind:src="image.url" v-bind:alt="image.alt" />
+      <div id="myApp">
+        <h1>{{siteName}}</h1>
+        <br>
+        <div v-for="lesson in lessons" :key="lesson.id">
+            <img v-bind:src="lesson.image.url" v-bind:alt="lesson.image.alt" />
+            <p><b>Subject:</b> {{ lesson.subject }}</p>
+            <p><b>Location:</b> {{ lesson.location }}</p>
+            <p><b>Price:</b> {{ lesson.price }}</p>
+            <p><b>Availability:</b> {{lesson.availability}}</p>
+        </div>
     </div>
     <script>
         const { createApp } = Vue;
@@ -19,14 +24,111 @@
         createApp({
             data() {
                 return {
+                    siteName: "After School Classes",
+                    lessons: [
+                        {image: {
+                            url:"../CST3144_COURSEWORK_FRONTEND/images/computer_science_img.jpg", alt:"Computer Science Lesson Image"
+                        },
+                        id: 1001, 
+                        subject:'Computer Science', 
+                        location:'Hendon', 
+                        price: '2000',
+                        availability: '5',
+                        image: {
+                            url:"../CST3144_COURSEWORK_FRONTEND/images/computer_science_img.jpg", alt:"Computer Science Lesson Image"
+                        }
+                     },
+                      { image: {
+                            url:"../CST3144_COURSEWORK_FRONTEND/images/maths_image.jpg", alt:"Mathematics Lesson Image"
+                        },
+                        id: 1002, 
+                        subject:'Mathematics', 
+                        location:'Dubai', 
+                        price: '2500', 
+                        availability: '5',
+                        
+                     },
+                      { image: {
+                            url:"../CST3144_COURSEWORK_FRONTEND/images/english_image.jpg", alt:"English Lesson Image"
+                        },
+                        id: 1003, 
+                        subject:'English', 
+                        location:'Mauritius', 
+                        price: '3000', 
+                        availability: '5'
+                        
+                     },
+                      { image: {
+                            url:"../CST3144_COURSEWORK_FRONTEND/images/science_image.jpg", alt:"Science Lesson Image"
+                        },
+                        id: 1004, 
+                        subject:'Science', 
+                        location:'Hendon', 
+                        price: '2800', 
+                        availability: '5',
+                        
+                     },
+                      { image: {
+                            url:"../CST3144_COURSEWORK_FRONTEND/images/music_image.jpg", alt:"Music Lesson Image"
+                        },
+                        id: 1005, 
+                        subject:'Music', 
+                        location:'Dubai', 
+                        price: '1500',
+                        availability: '5'
+                        
+                     },
+                      {  image: {
+                            url:"../CST3144_COURSEWORK_FRONTEND/images/history_image.jpg", alt:"History Lesson Image"
+                        },
+                        id: 1006, 
+                        subject:'History', 
+                        location:'Mauritius', 
+                        price: '1800', 
+                        availability: '5'
                     
-                            subject: 'Computer Science', 
-                            location: 'Hendon', 
-                            price: 'Rs2000', 
-                            image:{
-                                url:"../CST3144_COURSEWORK_FRONTEND/images/computer_science_img.jpg",
-                                alt:"Computer Science lesson image"
-                            }
+                     },
+                      { image: {
+                            url:"../CST3144_COURSEWORK_FRONTEND/images/geography_image.jpg", alt:"Geography Lesson Image"
+                        },
+                        id: 1007, 
+                        subject:'Geography', 
+                        location:'Hendon', 
+                        price: '1600',
+                        availability: '5'
+                        
+                     },
+                      { image: {
+                            url:"../CST3144_COURSEWORK_FRONTEND/images/photography_image.jpg", alt:"Photography Lesson Image"
+                        },
+                        id: 1008, 
+                        subject:'Photography', 
+                        location:'Mauritius', 
+                        price: '2200',
+                        availability: '5'
+                        
+                     },
+                      {  image: {
+                            url:"../CST3144_COURSEWORK_FRONTEND/images/football_image.jpg", alt:"Football Lesson Image"
+                        },
+                        id: 1009, 
+                        subject:'Football', 
+                        location:'Dubai', 
+                        price: '2500', 
+                        availability: '5',
+                       
+                     },
+                      { image: {
+                            url: "../CST3144_COURSEWORK_FRONTEND/images/basketball_image.jpg", alt: "Basketball Lesson Image"
+                        },
+                        id: 1010, 
+                        subject:'Basketball', 
+                        location:'Hendon', 
+                        price: '2700', 
+                        availability: '5',
+                        
+                     }
+                    ]
                     
                 }
             },
