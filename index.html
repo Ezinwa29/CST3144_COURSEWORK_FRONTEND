@@ -4,20 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coursework</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome/4.7.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
       <div id="myApp">
         <h1>{{siteName}}</h1>
         <br>
-        <div v-for="lesson in lessons" :key="lesson.id">
+        <button v-on:click="toggleCart()" v-bind:disabled="cart.length === 0 && !showCart">
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            {{ showCart ? "Back to lessons" : "Cart (" + cartItemCount + ")" }}
+        </button>
+
+        <div v-if="!showCart">
+           <div v-for="lesson in lessons" :key="lesson.id">
             <img v-bind:src="lesson.image.url" v-bind:alt="lesson.image.alt" />
             <p><b>Subject:</b> {{ lesson.subject }}</p>
             <p><b>Location:</b> {{ lesson.location }}</p>
             <p><b>Price:</b> {{ lesson.price }}</p>
-            <p><b>Availability:</b> {{lesson.availability}}</p>
+            <p><b>Space(s):</b> {{lesson.space}}</p>
             <button v-on:click="addToCart(lesson)" v-bind:disabled="!canAddToCart(lesson)">Add to Cart</button>
+           </div>
         </div>
+        
+        <div v-else>
+            <!--cart page next-->
+        </div>
+        
     </div>
     <script>
         const { createApp } = Vue;
@@ -27,6 +40,7 @@
                 return {
                     siteName: "After School Classes",
                     cart: [],
+                    showCart: false,
                     lessons: [
                         {image: {
                             url:"../CST3144_COURSEWORK_FRONTEND/images/computer_science_img.jpg", alt:"Computer Science Lesson Image"
@@ -35,7 +49,7 @@
                         subject:'Computer Science', 
                         location:'Hendon', 
                         price: '2000',
-                        availability: 5
+                        space: 5
                         
                      },
                       { image: {
@@ -45,7 +59,7 @@
                         subject:'Mathematics', 
                         location:'Dubai', 
                         price: '2500', 
-                        availability: 5
+                        space: 5
                         
                      },
                       { image: {
@@ -55,7 +69,7 @@
                         subject:'English', 
                         location:'Mauritius', 
                         price: '3000', 
-                        availability: 5
+                        space: 5
                         
                      },
                       { image: {
@@ -65,7 +79,7 @@
                         subject:'Science', 
                         location:'Hendon', 
                         price: '2800', 
-                        availability: 5
+                        space: 5
                         
                      },
                       { image: {
@@ -75,7 +89,7 @@
                         subject:'Music', 
                         location:'Dubai', 
                         price: '1500',
-                        availability: 5
+                        space: 5
                         
                      },
                       {  image: {
@@ -85,7 +99,7 @@
                         subject:'History', 
                         location:'Mauritius', 
                         price: '1800', 
-                        availability: 5
+                        space: 5
                     
                      },
                       { image: {
@@ -95,7 +109,7 @@
                         subject:'Geography', 
                         location:'Hendon', 
                         price: '1600',
-                        availability: 5
+                        space: 5
                         
                      },
                       { image: {
@@ -105,7 +119,7 @@
                         subject:'Photography', 
                         location:'Mauritius', 
                         price: '2200',
-                        availability: 5
+                        space: 5
                         
                      },
                       {  image: {
@@ -115,7 +129,7 @@
                         subject:'Football', 
                         location:'Dubai', 
                         price: '2500', 
-                        availability: 5
+                        space: 5
                        
                      },
                       { image: {
@@ -125,7 +139,7 @@
                         subject:'Basketball', 
                         location:'Hendon', 
                         price: '2700', 
-                        availability: 5
+                        space: 5
                         
                      }
                     ]
@@ -134,18 +148,25 @@
             },
 
             computed: {
+                cartItemCount(){
+                    return this.cart.length
+                }
 
             },
 
             methods: {
                 addToCart(lesson) {
                     this.cart.push(lesson.id)
-                    lesson.availability--
+                    lesson.space--
                 },
 
                 canAddToCart(lesson) {
-                    return lesson.availability > 0
+                    return lesson.space > 0
                 },
+
+                toggleCart(){
+                    this.showCart = !this.showCart
+                }
 
 
             }
