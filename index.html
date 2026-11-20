@@ -17,7 +17,18 @@
         </button>
 
         <div v-if="!showCart">
-           <div v-for="lesson in lessons" :key="lesson.id">
+           <select v-model="sortBy">
+            <option value="subject">Subject</option>
+            <option value="location">Location</option>
+            <option value="price">Price</option>
+            <option value="space">Space(s)</option>
+           </select>
+           <select v-model="sortOrder">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+           </select>
+           
+           <div v-for="lesson in sortedLessons" :key="lesson.id">
             <img v-bind:src="lesson.image.url" v-bind:alt="lesson.image.alt" />
             <p><b>Subject:</b> {{ lesson.subject }}</p>
             <p><b>Location:</b> {{ lesson.location }}</p>
@@ -58,6 +69,8 @@
                     showCart: false,
                     order: { name: "", phone: ""},
                     orderSubmitted: false,
+                    sortBy: "subject",
+                    sortOrder: "asc",
                     lessons: [
                         {image: {
                             url:"../CST3144_COURSEWORK_FRONTEND/images/computer_science_img.jpg", alt:"Computer Science Lesson Image"
@@ -165,7 +178,7 @@
             },
 
             computed: {
-                cartItemCount(){
+                cartItemCount() {
                     return this.cart.length
                 },
 
@@ -179,6 +192,16 @@
 
                 canCheckout() {
                     return this.validName && this.validPhone && this.cart.length > 0
+                },
+
+                sortedLessons() {
+                    const key = this.sortBy
+                    const dir = this.sortOrder === "asc" ? 1 : -1
+                    return [...this.lessons].sort((a,b) => {
+                        if (a[key] < b[key]) return -1 * dir
+                        if (a[key] > b[key]) return 1 * dir
+                        return 0
+                    })
                 }
 
             },
