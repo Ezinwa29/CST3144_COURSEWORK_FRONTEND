@@ -28,7 +28,15 @@
         </div>
         
         <div v-else>
-            <!--cart page next-->
+            <h2>My Cart</h2>
+            <p v-if="cart.length === 0">Your cart is empty</p>
+            <div v-for="lesson in lessons" :key="lesson.id">
+                <div v-if="lessonCount(lesson.id) > 0">
+                    {{ lesson.subject }}, {{ lesson.location }}:
+                    {{ lessonCount (lesson.id) }} x {{ lesson.price }}
+                    <button v-on:click="removeFromCart(lesson)" >Remove</button>
+                </div>
+            </div>
         </div>
         
     </div>
@@ -166,9 +174,18 @@
 
                 toggleCart(){
                     this.showCart = !this.showCart
-                }
-
-
+                },
+                
+                lessonCount(id) {
+                    return this.cart.filter(item => item === id).length
+                },
+                
+                removeFromCart(lesson) {const index = this.cart.indexOf(lesson.id)
+                    if (index > -1) {
+                        this.cart.splice(index, 1)
+                        lesson.space++
+                    }
+                },
             }
         }).mount('#myApp');
     </script>
