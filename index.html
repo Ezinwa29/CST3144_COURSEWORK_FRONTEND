@@ -37,6 +37,13 @@
                     <button v-on:click="removeFromCart(lesson)" >Remove</button>
                 </div>
             </div>
+            <h3> Cart Checkout</h3>
+            <p>Name: <input v-model="order.name"></p>
+            <p v-if="order.name && !validName">Letters only please.</p>
+            <p>Phone: <input v-model="order.phone"></p>
+            <p v-if="order.phone && !validPhone">Numbers only please.</p>
+            <button v-on:click="checkout()" v-bind:disabled="!canCheckout">Checkout</button>
+            <p v-if="orderSubmitted">Your order has been submitted. Thank you!</p>
         </div>
         
     </div>
@@ -49,6 +56,8 @@
                     siteName: "After School Classes",
                     cart: [],
                     showCart: false,
+                    order: { name: "", phone: ""},
+                    orderSubmitted: false,
                     lessons: [
                         {image: {
                             url:"../CST3144_COURSEWORK_FRONTEND/images/computer_science_img.jpg", alt:"Computer Science Lesson Image"
@@ -158,6 +167,18 @@
             computed: {
                 cartItemCount(){
                     return this.cart.length
+                },
+
+                validName() {
+                    return /^[A-Za-z ]+$/.test(this.order.name)
+                },
+
+                validPhone() {
+                    return /^[0-9]+$/.test(this.order.phone)
+                },
+
+                canCheckout() {
+                    return this.validName && this.validPhone && this.cart.length > 0
                 }
 
             },
@@ -174,6 +195,7 @@
 
                 toggleCart(){
                     this.showCart = !this.showCart
+                    this.orderSubmitted = false
                 },
                 
                 lessonCount(id) {
@@ -185,6 +207,12 @@
                         this.cart.splice(index, 1)
                         lesson.space++
                     }
+                },
+
+                checkout(){
+                    this.orderSubmitted = true,
+                    this.cart=[],
+                    this.order = { name: "", phone: ""}
                 },
             }
         }).mount('#myApp');
